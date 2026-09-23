@@ -51,7 +51,7 @@ def circuits(draw, cyan, seed):
             for qx,qy in pts[::3]:
                 draw.ellipse((qx-3,qy-3,qx+3,qy+3),fill=cyan)
 
-def make(name, base1,base2,metal,accent,cyan):
+def make(name, base1,base2,metal,accent,cyan, mode="classic"):
     tex=gradient(base1,base2)
     d=ImageDraw.Draw(tex,"RGB")
     # metallic center accents
@@ -83,3 +83,12 @@ make("JarvisMobil_Mark85_v1.png",
 make("JarvisMobil_ArcBlue_v1.png",
      (3,34,62),(3,9,18),(170,185,195),(4,78,132),(80,225,255))
 print("generated")
+
+make("JarvisMobil_ArcBlue_v2.png",
+     (2,28,52),(2,7,15),(105,125,140),(3,62,110),(76,232,255),"energy")
+make("JarvisMobil_ArcCore_v3.png",
+     (1,18,34),(1,4,10),(55,72,86),(5,40,78),(115,245,255),"energy")
+make("JarvisMobil_Experimental_v4.png",
+     (8,8,12),(2,2,5),(112,125,135),(20,36,52),(0,245,255),"hud")
+make("JarvisMobil_TP1_v5.png",
+     (9,17,24),(2,5,8),(180,185,188),(34,48,58),(90,220,235),"tp1")
