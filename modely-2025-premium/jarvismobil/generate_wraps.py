@@ -117,3 +117,44 @@ def make_jarvis_arc_v2():
     out.paste(tex,(0,0),mask)
     out.save(os.path.join(OUT,"JarvisMobil_JARVIS_ARC_v2.png"),optimize=True,compress_level=9)
 make_jarvis_arc_v2()
+
+# V3 ARMOR — rebuilt from scratch after in-car V2 review.
+def make_armor_v3():
+    tex=gradient((4,22,34),(1,4,8))
+    d=ImageDraw.Draw(tex,"RGB")
+    cyan=(75,235,255); glow=(205,252,255); titanium=(42,58,68); blue=(7,62,91)
+    # Large interlocking armor plates; broad shapes survive Tesla 3D rendering.
+    plates=[
+      [(55,120),(245,65),(410,135),(325,300),(105,285)],
+      [(969,120),(779,65),(614,135),(699,300),(919,285)],
+      [(70,335),(275,305),(405,430),(300,590),(85,555)],
+      [(954,335),(749,305),(619,430),(724,590),(939,555)],
+      [(85,610),(300,600),(405,730),(290,900),(100,845)],
+      [(939,610),(724,600),(619,730),(734,900),(924,845)]
+    ]
+    for i,p in enumerate(plates):
+        d.polygon(p,fill=titanium if i%2==0 else blue)
+        # cyan seam only on one edge, not random cracks
+        d.line(p[:3],fill=cyan,width=5)
+    # central dark armored spine, no silver racing stripe
+    d.polygon([(450,55),(512,30),(574,55),(552,390),(512,430),(472,390)],fill=(10,17,22))
+    d.line((512,42,512,420),fill=cyan,width=3)
+    # angular energy vents
+    for cx,sgn in [(205,1),(819,-1)]:
+        for yy in (245,500,755):
+            pts=[(cx,yy),(cx+sgn*72,yy+26),(cx+sgn*35,yy+55)]
+            d.line(pts,fill=glow,width=4)
+    # compact triangular AI cores integrated into armor
+    for cx,cy,s in [(512,700,44),(170,505,25),(854,505,25)]:
+        pts=[(cx,cy-s),(cx-s,cy+s),(cx+s,cy+s),(cx,cy-s)]
+        d.line(pts,fill=cyan,width=5)
+        d.polygon([(cx,cy-int(s*.45)),(cx-int(s*.42),cy+int(s*.42)),(cx+int(s*.42),cy+int(s*.42))],fill=(18,90,110))
+        d.ellipse((cx-5,cy-5,cx+5,cy+5),fill=glow)
+    # restrained HUD glyph bars
+    for x in (125,899):
+        for y in (180,390,600,810):
+            d.line((x-24,y,x+24,y),fill=(100,210,225),width=2)
+    out=Image.new("RGB",(W,H),(0,0,0))
+    out.paste(tex,(0,0),mask)
+    out.save(os.path.join(OUT,"JarvisMobil_ARMOR_v3.png"),optimize=True,compress_level=9)
+make_armor_v3()
