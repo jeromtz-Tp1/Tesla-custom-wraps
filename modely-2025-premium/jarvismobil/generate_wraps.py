@@ -158,3 +158,43 @@ def make_armor_v3():
     out.paste(tex,(0,0),mask)
     out.save(os.path.join(OUT,"JarvisMobil_ARMOR_v3.png"),optimize=True,compress_level=9)
 make_armor_v3()
+
+# V4 SIGNATURE — UV translation of the approved automotive concept.
+def make_signature_v4():
+    tex=gradient((72,82,90),(5,9,13))
+    d=ImageDraw.Draw(tex,"RGB")
+    cyan=(0,196,255); bright=(90,232,255); silver=(150,158,164); graphite=(22,28,34); black=(5,7,10)
+    # hood / central signature: graphite field with two controlled blue blades
+    d.polygon([(360,70),(512,45),(664,70),(610,355),(512,315),(414,355)],fill=graphite)
+    d.line((418,92,486,338),fill=cyan,width=7)
+    d.line((606,92,538,338),fill=cyan,width=7)
+    # side architecture: silver upper body, black rocker, geometric rear armor
+    for left in (True,False):
+        if left:
+            upper=[(55,175),(350,170),(405,385),(325,620),(65,560)]
+            lower=[(60,555),(330,615),(400,810),(115,845),(55,760)]
+            rear=[(205,610),(350,545),(420,650),(335,790),(245,735)]
+        else:
+            upper=[(969,175),(674,170),(619,385),(699,620),(959,560)]
+            lower=[(964,555),(694,615),(624,810),(909,845),(969,760)]
+            rear=[(819,610),(674,545),(604,650),(689,790),(779,735)]
+        d.polygon(upper,fill=silver)
+        d.polygon(lower,fill=black)
+        d.polygon(rear,fill=graphite)
+        # one deliberate energy line defines the body, with angular rear kick
+        pts=[(upper[0][0],535),(upper[2][0],520),(rear[0][0],660),(rear[3][0],770)]
+        d.line(pts,fill=cyan,width=7)
+        d.line([(p[0],p[1]-7) for p in pts],fill=(20,70,90),width=2)
+    # rear-quarter edition badge as geometry rather than text (Tesla render-safe)
+    for cx in (270,754):
+        d.polygon([(cx-28,665),(cx+18,645),(cx+28,680),(cx-18,700)],fill=(185,190,195))
+        d.line((cx-8,652,cx-8,693),fill=cyan,width=3)
+    # bumper accents and narrow cyan signature
+    d.line((120,885,400,850),fill=cyan,width=5); d.line((624,850,904,885),fill=cyan,width=5)
+    d.polygon([(420,870),(604,870),(580,935),(444,935)],fill=graphite)
+    # mirror cyan cap detail
+    d.line((138,385,180,385),fill=bright,width=4); d.line((844,385,886,385),fill=bright,width=4)
+    out=Image.new("RGB",(W,H),(0,0,0))
+    out.paste(tex,(0,0),mask)
+    out.save(os.path.join(OUT,"JarvisMobil_SIGNATURE_v4.png"),optimize=True,compress_level=9)
+make_signature_v4()
