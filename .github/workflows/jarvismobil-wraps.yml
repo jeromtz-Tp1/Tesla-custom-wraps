@@ -24,7 +24,7 @@ jobs:
           python - <<'PY'
           from PIL import Image
           import os
-          for f in ["JarvisMobil_Mark85_v1.png","JarvisMobil_ArcBlue_v1.png","JarvisMobil_JARVIS_ARC_v2.png"]:
+          for f in ["JarvisMobil_Mark85_v1.png","JarvisMobil_ArcBlue_v1.png","JarvisMobil_JARVIS_ARC_v2.png","JarvisMobil_ARMOR_v3.png"]:
               p="modely-2025-premium/jarvismobil/"+f
               im=Image.open(p)
               size=os.path.getsize(p)
