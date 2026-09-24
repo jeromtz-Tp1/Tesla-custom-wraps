@@ -92,3 +92,28 @@ make("JarvisMobil_Experimental_v4.png",
      (8,8,12),(2,2,5),(112,125,135),(20,36,52),(0,245,255),"hud")
 make("JarvisMobil_TP1_v5.png",
      (9,17,24),(2,5,8),(180,185,188),(34,48,58),(90,220,235),"tp1")
+
+def make_jarvis_arc_v2():
+    tex=gradient((1,12,24),(0,2,7))
+    d=ImageDraw.Draw(tex,"RGB")
+    cyan=(80,238,255); ice=(205,248,255); gun=(28,48,62)
+    for i in range(7):
+        y=150+i*105
+        d.arc((35,y-90,475,y+115),205,345,fill=cyan,width=3+(i%2))
+        d.arc((549,y-115,989,y+90),15,155,fill=cyan,width=3+(i%2))
+    d.polygon([(492,70),(512,48),(532,70),(526,360),(512,395),(498,360)],fill=gun)
+    d.line((512,58,512,402),fill=ice,width=5)
+    for pts in [[(78,180),(270,105),(360,150),(205,245)],[(946,180),(754,105),(664,150),(819,245)],[(65,470),(245,405),(335,470),(190,555)],[(959,470),(779,405),(689,470),(834,555)],[(90,760),(255,680),(340,735),(205,825)],[(934,760),(769,680),(684,735),(819,825)]]:
+        d.polygon(pts,fill=gun)
+    reactor(d,512,690,36,cyan)
+    reactor(d,164,510,19,cyan); reactor(d,860,510,19,cyan)
+    for x in (115,205,819,909):
+        for y in range(220,820,150):
+            d.line((x-16,y,x+16,y),fill=ice,width=2)
+            d.ellipse((x-3,y-3,x+3,y+3),fill=ice)
+    d.line((230,120,330,880),fill=(24,105,135),width=2)
+    d.line((794,120,694,880),fill=(24,105,135),width=2)
+    out=Image.new("RGB",(W,H),(0,0,0))
+    out.paste(tex,(0,0),mask)
+    out.save(os.path.join(OUT,"JarvisMobil_JARVIS_ARC_v2.png"),optimize=True,compress_level=9)
+make_jarvis_arc_v2()
