@@ -1,0 +1,41 @@
+name: Generate JarvisMobil wraps
+on:
+  push:
+    branches: [jarvismobil-v1]
+    paths:
+      - 'modely-2025-premium/jarvismobil/generate_wraps.py'
+      - '.github/workflows/jarvismobil-wraps.yml'
+permissions:
+  contents: write
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: jarvismobil-v1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install pillow
+      - run: python modely-2025-premium/jarvismobil/generate_wraps.py
+      - name: Validate Tesla requirements
+        run: |
+          python - <<'PY'
+          from PIL import Image
+          import os
+          for f in ["JarvisMobil_Mark85_v1.png","JarvisMobil_ArcBlue_v1.png","JarvisMobil_JARVIS_ARC_v2.png","JarvisMobil_ARMOR_v3.png","JarvisMobil_SIGNATURE_v4.png","JarvisMobil_SIGNATURE_CALIBRATED_v5.png"]:
+              p="modely-2025-premium/jarvismobil/"+f
+              im=Image.open(p)
+              size=os.path.getsize(p)
+              assert im.size==(1024,1024), (f,im.size)
+              assert size <= 1024*1024, (f,size)
+              print(f, im.size, size)
+          PY
+      - name: Commit generated PNGs
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add modely-2025-premium/jarvismobil/*.png
+          git diff --cached --quiet || git commit -m "feat: generate JarvisMobil wraps [skip ci]"
+          git push
