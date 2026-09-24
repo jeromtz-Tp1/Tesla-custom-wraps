@@ -198,3 +198,44 @@ def make_signature_v4():
     out.paste(tex,(0,0),mask)
     out.save(os.path.join(OUT,"JarvisMobil_SIGNATURE_v4.png"),optimize=True,compress_level=9)
 make_signature_v4()
+
+# V5 SIGNATURE CALIBRATED — rebuilt using successful Concept 02 Tesla projection as UV calibration.
+def make_signature_calibrated_v5():
+    tex=gradient((58,67,74),(10,14,18))
+    d=ImageDraw.Draw(tex,"RGB")
+    cyan=(0,196,255); cyan_hi=(80,230,255); graphite=(27,33,39); dark=(6,9,12); titanium=(102,111,118)
+    # Maintain one coherent metallic family across UV islands.
+    d.rectangle((0,0,W,H),fill=(62,70,76))
+    # Hood signature: broad dark center + paired cyan blades (concept master).
+    d.polygon([(382,65),(512,38),(642,65),(602,346),(512,316),(422,346)],fill=graphite)
+    d.line((414,86,480,332),fill=cyan,width=6); d.line((610,86,544,332),fill=cyan,width=6)
+    # Dark rocker areas calibrated from Claudito Concept 02 successful lower-body projection.
+    d.polygon([(48,555),(405,600),(445,925),(45,945)],fill=dark)
+    d.polygon([(976,555),(619,600),(579,925),(979,945)],fill=dark)
+    # Rear quarter angular armor.
+    d.polygon([(70,500),(270,485),(400,605),(322,780),(155,735)],fill=graphite)
+    d.polygon([(954,500),(754,485),(624,605),(702,780),(869,735)],fill=graphite)
+    d.polygon([(205,565),(320,530),(382,610),(310,700),(240,670)],fill=(88,96,102))
+    d.polygon([(819,565),(704,530),(642,610),(714,700),(784,670)],fill=(88,96,102))
+    # Continuous cyan beltline: wide enough to survive UV seams, but visually restrained.
+    left=[(52,505),(135,500),(240,510),(345,530),(405,585),(340,660),(275,705)]
+    right=[(972,505),(889,500),(784,510),(679,530),(619,585),(684,660),(749,705)]
+    for pts in (left,right):
+        d.line(pts,fill=(16,76,96),width=12)
+        d.line(pts,fill=cyan,width=5)
+    # Lower cyan kick matching approved concept.
+    d.line((90,820,260,790,390,700),fill=cyan,width=5)
+    d.line((934,820,764,790,634,700),fill=cyan,width=5)
+    # Edition 01 geometry on rear quarter.
+    for cx in (250,774):
+        d.polygon([(cx-22,610),(cx+18,596),(cx+25,632),(cx-16,646)],fill=(155,162,167))
+        d.line((cx-4,603,cx-4,640),fill=cyan_hi,width=2)
+    # Mirror accent.
+    d.line((138,382,182,382),fill=cyan_hi,width=4); d.line((842,382,886,382),fill=cyan_hi,width=4)
+    # Front lower aero accents.
+    d.polygon([(55,880),(145,860),(185,900),(92,925)],fill=graphite)
+    d.polygon([(969,880),(879,860),(839,900),(932,925)],fill=graphite)
+    out=Image.new("RGB",(W,H),(0,0,0))
+    out.paste(tex,(0,0),mask)
+    out.save(os.path.join(OUT,"JarvisMobil_SIGNATURE_CALIBRATED_v5.png"),optimize=True,compress_level=9)
+make_signature_calibrated_v5()
